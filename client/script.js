@@ -82,8 +82,14 @@ sayHelloButton.addEventListener('click', sayHello)
 const ohMy = () => {
     axios.get('http://localhost:3000/animals')
     .then(response => {
-       for(i = 0; i < res.data.length; i++){
-        document.createElement('p').textContent = [i].appendChild('body')
+       for(i = 0; i < response.data.length; i++){
+        console.log(response.data)
+        let { data } = response
+        data.forEach(animal => {
+            let newP = document.createElement('p')
+            newP.textContent = animal
+            document.querySelector('body').appendChild(newP)
+        })
         
        }
     })
@@ -197,4 +203,27 @@ document.getElementById('query-button').addEventListener('click', req)
     Based on what we did earlier to display this type of data, write code that will display the response in your HTML document. 
 */
 
+createPTags = arr =>{
+    arr.forEach(element =>{
+        let newP = document.createElement('p')
+       newP.textContent = element
+        document.querySelector('body').appendChild(newP)
+        })
+    }
+
 // CODE HERE 
+const createFood = evt =>{
+    evt.preventDefault()
+    let foodInput = document.querySelector('input')
+    let body = {
+        newFood: foodInput.value
+    }
+    axios.post('http://localhost:3000/food', body)
+    .then(response =>{
+        console.log(response.data)
+        let { data } = response
+        createPTags(data)
+        })
+        .catch(err=> console.log(err))
+    }
+ document.querySelector('form').addEventListener('submit', createFood)
