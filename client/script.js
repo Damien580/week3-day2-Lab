@@ -10,7 +10,7 @@
 */
 
 // CODE HERE
-let sayHelloButton = document.querySelector('say-hello-button')
+let sayHelloButton = document.querySelector('#say-hello-button')
 
 // PROBLEM 2
 /*
@@ -20,6 +20,14 @@ let sayHelloButton = document.querySelector('say-hello-button')
 */
 
 // CODE HERE
+
+const changeColor = evt =>{
+    sayHelloButton.style.backgroundColor= '#000000'
+    sayHelloButton.style.color= '#ffffff'
+}
+sayHelloButton.addEventListener('mouseover', changeColor)
+
+    
 
 
 // PROBLEM 3
@@ -32,7 +40,11 @@ let sayHelloButton = document.querySelector('say-hello-button')
 */
 
 // CODE HERE
-
+const changeBack = evt =>{
+    sayHelloButton.style.backgroundColor= 'white'
+    sayHelloButton.style.color= 'black'
+}
+sayHelloButton.addEventListener('mouseleave', changeBack)
 
 // PROBLEM 4
 /*
@@ -50,10 +62,11 @@ const sayHello = () => {
         helloText.textContent = res.data;
     })
 }
+
 // DO NOT EDIT FUNCTION
 
 // CODE HERE
-
+sayHelloButton.addEventListener('click', sayHello)
 
 // PROBLEM 5 
 /*
@@ -67,7 +80,13 @@ const sayHello = () => {
 */ 
 
 const ohMy = () => {
-    // YOUR CODE HERE
+    axios.get('http://localhost:3000/animals')
+    .then(response => {
+       for(i = 0; i < res.data.length; i++){
+        document.createElement('p').textContent = [i].appendChild('body')
+        
+       }
+    })
 }
 
 document.getElementById('animals-button').addEventListener('click', ohMy)
@@ -87,8 +106,16 @@ document.getElementById('animals-button').addEventListener('click', ohMy)
 */
 
 const repeatMyParam = () => {
-    //YOUR CODE HERE
+    axios.get('http://localhost:3000/repeat/{lions}')
+    .then(response => {
+        console.log(response.data)
+        let repeatText = document.getElementById('repeat-text')
+        repeatText.textContent = response.data
+        repeatText.style.display = 'block'
+    })
+    
 }
+document.getElementById('repeat-button').addEventListener('click', repeatMyParam)
 
 // PROBLEM 7
 /*
@@ -113,8 +140,13 @@ const repeatMyParam = () => {
 */
 
 // CODE HERE
-
-
+const req = evt => {
+    axios.get('http://localhost:3000/query-test?pee&poo')
+    .then(response => {
+        console.log(response.data)
+    })
+}
+document.getElementById('query-button').addEventListener('click', req)
 
 ////////////////
 //INTERMEDIATE//
@@ -133,9 +165,9 @@ const repeatMyParam = () => {
 /*
     In the function that you wrote for Problem 8, change the URL to test a couple different scenarios. 
 
-    1: Send no queries on the URL -- what happened? 
+    1: Send no queries on the URL -- what happened? returned a message saying "You sent an empty query!"
 
-    2: Send more than 1 query on the URL -- what happened? 
+    2: Send more than 1 query on the URL -- what happened? returned a message saying "{message: "You sent more than 1 query!", queries: {pee: "", poo: ""}}"
 */
 
 // Edit code in Problem 8
